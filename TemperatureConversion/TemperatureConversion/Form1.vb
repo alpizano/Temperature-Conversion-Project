@@ -1,6 +1,6 @@
 ﻿Public Class Form1
     Private Sub btnConvert_Click(sender As Object, e As EventArgs) Handles btnConvert.Click
-        Dim fromVal As Integer = txtFrom.Text 'Value inside From textbox
+        Dim fromVal As Double = 0 'Value inside From textbox
         Dim answer As Double = 0.0 'Result displayed inside To textbox
 
         'Get values from both Drop-down boxes and store inside variables
@@ -11,34 +11,55 @@
         Console.WriteLine("Drop down 2 selected item is: " & drpDownSelect2)
 
 
+        Select Case drpDownSelect1
+                'Fahrenheit case
+            Case Is = "FAHRENHEIT"
+                If drpDownSelect2 = "CELSIUS" Then
+                    fromVal = txtFrom.Text
+                    Console.WriteLine("From value text box is: " & fromVal)
+                    answer = (fromVal - 32) * 5 / 9 'Converting to Celsius
+                    txtTo.Text = answer
+                ElseIf drpDownSelect2 = "KELVIN" Then
+                    fromVal = txtFrom.Text
+                    Console.WriteLine("From value text box is: " & fromVal)
+                    answer = (fromVal - 32) * 5 / 9 + 273.15 'Converting to Kelvin
+                    txtTo.Text = answer
+                Else
+                    txtTo.Text = txtFrom.Text 'Same value
+                End If
 
-        'Fahrenheit conditions
-        If drpDownSelect1 = "FAHRENHEIT" And drpDownSelect2 = "CELSIUS" Then
-            Console.WriteLine("From value text box is: " & fromVal)
-            answer = (fromVal - 32) * 5 / 9 'Converting to Celsius
-            txtTo.Text = answer
-        ElseIf drpDownSelect1 = "FAHRENHEIT" And drpDownSelect2 = "KELVIN" Then
-            fromVal = txtFrom.Text
-            Console.WriteLine("From value text box is: " & fromVal)
-            answer = (fromVal - 32) * 5 / 9 + 273.15 'Converting to Kelvin
-            txtTo.Text = answer
-        ElseIf drpDownSelect1 = "FAHRENHEIT" And drpDownSelect2 = "FAHRENHEIT" Then
-            txtTo.Text = txtFrom.Text 'Same value
+                'Celsius case   
+            Case Is = "CELSIUS"
+                If drpDownSelect2 = "FAHRENHEIT" Then
+                    fromVal = txtFrom.Text
+                    Console.WriteLine("From value text box is: " & fromVal)
+                    answer = (fromVal * 9 / 5) + 32 'Converting to Celsius
+                    txtTo.Text = answer
+                ElseIf drpDownSelect2 = "KELVIN" Then
+                    fromVal = txtFrom.Text
+                    Console.WriteLine("From value text box is: " & fromVal)
+                    answer = fromVal + 273.15 'Converting to Kelvin
+                    txtTo.Text = answer
+                Else
+                    txtTo.Text = txtFrom.Text 'Same value           
+                End If
 
-            'Celsius conditions
-        ElseIf drpDownSelect1 = "CELSIUS" And drpDownSelect2 = "FAHRENHEIT" Then
-            Console.WriteLine("From value text box is: " & fromVal)
-            answer = (fromVal * 9 / 5) + 32 'Converting to Celsius
-            txtTo.Text = answer
-        ElseIf drpDownSelect1 = "CELSIUS" And drpDownSelect2 = "KELVIN" Then
-            fromVal = txtFrom.Text
-            Console.WriteLine("From value text box is: " & fromVal)
-            answer = fromVal + 273.15 'Converting to Kelvin
-            txtTo.Text = answer
-        ElseIf drpDownSelect1 = "CELSIUS" And drpDownSelect2 = "CELSIUS" Then
-            txtTo.Text = txtFrom.Text 'Same value
-            'Kelvin conditions
-        End If
+                'Kelvin case 
+            Case Else
+                If drpDownSelect2 = "FAHRENHEIT" Then
+                    fromVal = txtFrom.Text
+                    Console.WriteLine("From value text box is: " & fromVal)
+                    answer = (fromVal - 273.15) * 9 / 5 + 32
+                    txtTo.Text = answer
+                ElseIf drpDownSelect2 = "CELSIUS" Then
+                    fromVal = txtFrom.Text
+                    Console.WriteLine("From value text box is: " & fromVal)
+                    answer = fromVal - 273.15
+                    txtTo.Text = answer
+                Else
+                    txtTo.Text = txtFrom.Text 'Same value
+                End If
+        End Select
 
 
     End Sub
