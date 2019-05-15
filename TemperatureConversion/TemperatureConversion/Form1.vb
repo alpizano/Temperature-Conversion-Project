@@ -1,11 +1,19 @@
 ﻿Public Class Form1
     Private Sub btnConvert_Click(sender As Object, e As EventArgs) Handles btnConvert.Click
+        'Initialize variables
         Dim fromVal As Double = 0 'Value inside From textbox
         Dim answer As Double = 0.0 'Result displayed inside To textbox
+        Dim drpDownSelect1 = Nothing
+        Dim drpDownSelect2 = Nothing
 
+        'Error Handling
         'Get values from both Drop-down boxes and store inside variables
-        Dim drpDownSelect1 = drpDown1.SelectedItem.ToString()
-        Dim drpDownSelect2 = drpDown2.SelectedItem.ToString()
+        If drpDown1.SelectedIndex = -1 And drpDown2.SelectedIndex = -1 Then
+            drpDownSelect1 = drpDown1.SelectedItem.ToString()
+            drpDownSelect2 = drpDown2.SelectedItem.ToString()
+        Else
+            MessageBox.Show("Please select temperature units to convert from and to.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        End If
 
         Console.WriteLine("Drop down 1 selected item is: " & drpDownSelect1)
         Console.WriteLine("Drop down 2 selected item is: " & drpDownSelect2)
@@ -60,6 +68,7 @@
                     txtTo.Text = txtFrom.Text 'Same value
                 End If
         End Select
+
 
 
     End Sub
