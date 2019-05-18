@@ -5,12 +5,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2B1610E8-54E8-41D1-8C92-4CA2B44C3655}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <StartupObject>TemperatureConversion.My.MyApplication</StartupObject>
+    <OutputType>Exe</OutputType>
+    <StartupObject>TemperatureConversion.TemperatureConversion</StartupObject>
     <RootNamespace>TemperatureConversion</RootNamespace>
     <AssemblyName>TemperatureConversion</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>

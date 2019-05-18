@@ -35,29 +35,31 @@ Partial Class TemperatureConversion
     '
     'cboFrom
     '
+    Me.cboFrom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
     Me.cboFrom.FormattingEnabled = True
     Me.cboFrom.Items.AddRange(New Object() {"FAHRENHEIT", "CELSIUS", "KELVIN"})
     Me.cboFrom.Location = New System.Drawing.Point(164, 24)
     Me.cboFrom.Name = "cboFrom"
     Me.cboFrom.Size = New System.Drawing.Size(121, 21)
-    Me.cboFrom.TabIndex = 0
+    Me.cboFrom.TabIndex = 2
     '
     'cboTo
     '
+    Me.cboTo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
     Me.cboTo.FormattingEnabled = True
     Me.cboTo.Items.AddRange(New Object() {"FAHRENHEIT", "CELSIUS", "KELVIN"})
     Me.cboTo.Location = New System.Drawing.Point(164, 49)
     Me.cboTo.Name = "cboTo"
     Me.cboTo.Size = New System.Drawing.Size(121, 21)
-    Me.cboTo.TabIndex = 1
+    Me.cboTo.TabIndex = 5
     '
     'btnConvert
     '
     Me.btnConvert.Location = New System.Drawing.Point(16, 87)
     Me.btnConvert.Name = "btnConvert"
     Me.btnConvert.Size = New System.Drawing.Size(75, 23)
-    Me.btnConvert.TabIndex = 2
-    Me.btnConvert.Text = "Convert"
+    Me.btnConvert.TabIndex = 6
+    Me.btnConvert.Text = "&Convert"
     Me.btnConvert.UseVisualStyleBackColor = True
     '
     'btnReset
@@ -65,8 +67,8 @@ Partial Class TemperatureConversion
     Me.btnReset.Location = New System.Drawing.Point(114, 87)
     Me.btnReset.Name = "btnReset"
     Me.btnReset.Size = New System.Drawing.Size(75, 23)
-    Me.btnReset.TabIndex = 3
-    Me.btnReset.Text = "Reset"
+    Me.btnReset.TabIndex = 7
+    Me.btnReset.Text = "&Reset"
     Me.btnReset.UseVisualStyleBackColor = True
     '
     'btnExit
@@ -74,8 +76,8 @@ Partial Class TemperatureConversion
     Me.btnExit.Location = New System.Drawing.Point(210, 86)
     Me.btnExit.Name = "btnExit"
     Me.btnExit.Size = New System.Drawing.Size(75, 23)
-    Me.btnExit.TabIndex = 4
-    Me.btnExit.Text = "Exit"
+    Me.btnExit.TabIndex = 8
+    Me.btnExit.Text = "&Exit"
     Me.btnExit.UseVisualStyleBackColor = True
     '
     'lblFrom
@@ -84,7 +86,7 @@ Partial Class TemperatureConversion
     Me.lblFrom.Location = New System.Drawing.Point(12, 27)
     Me.lblFrom.Name = "lblFrom"
     Me.lblFrom.Size = New System.Drawing.Size(33, 13)
-    Me.lblFrom.TabIndex = 5
+    Me.lblFrom.TabIndex = 0
     Me.lblFrom.Text = "From:"
     '
     'lblTo
@@ -93,26 +95,28 @@ Partial Class TemperatureConversion
     Me.lblTo.Location = New System.Drawing.Point(12, 53)
     Me.lblTo.Name = "lblTo"
     Me.lblTo.Size = New System.Drawing.Size(23, 13)
-    Me.lblTo.TabIndex = 6
+    Me.lblTo.TabIndex = 3
     Me.lblTo.Text = "To:"
     '
     'txtFrom
     '
     Me.txtFrom.Location = New System.Drawing.Point(59, 24)
     Me.txtFrom.Name = "txtFrom"
+    Me.txtFrom.ShortcutsEnabled = False
     Me.txtFrom.Size = New System.Drawing.Size(100, 20)
-    Me.txtFrom.TabIndex = 7
+    Me.txtFrom.TabIndex = 1
     '
     'lblOutput
     '
     Me.lblOutput.AutoSize = True
+    Me.lblOutput.BackColor = System.Drawing.SystemColors.Window
     Me.lblOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
     Me.lblOutput.Location = New System.Drawing.Point(59, 49)
     Me.lblOutput.MaximumSize = New System.Drawing.Size(100, 15)
     Me.lblOutput.MinimumSize = New System.Drawing.Size(100, 20)
     Me.lblOutput.Name = "lblOutput"
     Me.lblOutput.Size = New System.Drawing.Size(100, 20)
-    Me.lblOutput.TabIndex = 8
+    Me.lblOutput.TabIndex = 4
     '
     'TemperatureConversion
     '
@@ -128,6 +132,9 @@ Partial Class TemperatureConversion
     Me.Controls.Add(Me.btnConvert)
     Me.Controls.Add(Me.cboTo)
     Me.Controls.Add(Me.cboFrom)
+    Me.MaximumSize = New System.Drawing.Size(313, 161)
+    Me.MinimizeBox = False
+    Me.MinimumSize = New System.Drawing.Size(313, 161)
     Me.Name = "TemperatureConversion"
     Me.Text = "Temperature Conversion"
     Me.ResumeLayout(False)
