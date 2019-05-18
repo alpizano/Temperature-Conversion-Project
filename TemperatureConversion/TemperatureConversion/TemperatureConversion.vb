@@ -39,10 +39,12 @@ Public Class TemperatureConversion
       e.Handled = True
     End If
 
-    'If statement to make sure dash (-) only allowed at index 0 of TextBox.
-    If Not String.IsNullOrEmpty(txtFrom.Text) And e.KeyChar = "-" Then
+    If e.KeyChar = "-" And Not txtFrom.SelectionStart = 0 Then
+      Console.WriteLine("method 1")
       e.Handled = True
     End If
+
+
   End Sub
 
   Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
