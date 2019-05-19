@@ -113,7 +113,6 @@ Public Class TemperatureConversion
               dFromValue = CType(txtFrom.Text, Double)
               lblOutput.Text = CType(KelvToFahr(dFromValue), String)
             Else
-              Console.WriteLine("I'm here dad")
               dFromValue = CType(txtFrom.Text, Double)
               lblOutput.Text = CType(KelvToCel(dFromValue), String)
             End If
