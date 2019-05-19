@@ -30,21 +30,16 @@ Public Class TemperatureConversion
 
   Private Sub txtFrom_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtFrom.KeyPress
     'If statement Makes sure only numeric 0-9, backspace, dash for negative sign (-), and decimal point (.) characters allowed in TextBox.
-    If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) And Not e.KeyChar = "." And Not e.KeyChar = "-" Then
+    If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) AndAlso Not e.KeyChar = "." AndAlso Not e.KeyChar = "-" Then
       e.Handled = True
     End If
-
     'If statement makes sure total of one decimal point (.) is allowed in TextBox.
-    If txtFrom.Text.IndexOf(".") >= 0 And e.KeyChar = "." Then
+    If txtFrom.Text.IndexOf(".") >= 0 AndAlso e.KeyChar = "." Then
       e.Handled = True
     End If
-
-    If e.KeyChar = "-" And Not txtFrom.SelectionStart = 0 Then
-      Console.WriteLine("method 1")
+    If e.KeyChar = "-" AndAlso Not txtFrom.SelectionStart = 0 Then
       e.Handled = True
     End If
-
-
   End Sub
 
   Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
@@ -66,24 +61,27 @@ Public Class TemperatureConversion
 
     'Error Handling for Drop-down boxes.
     'Get values from both Drop-down boxes and store inside variables if not NULL. Else throws NULL object reference Error 10001.
-    If cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex = -1 And Not String.IsNullOrEmpty(txtFrom.Text) Then
+    If cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex = -1 AndAlso Not String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please select temperature units to convert from and to.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       cboFrom.Select()
-    ElseIf cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex <> -1 And Not String.IsNullOrEmpty(txtFrom.Text) Then
+    ElseIf cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex <> -1 AndAlso Not String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please select temperature units to convert from and to.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       cboFrom.Select()
-    ElseIf cboTo.SelectedIndex = -1 AndAlso cboFrom.SelectedIndex <> -1 And Not String.IsNullOrEmpty(txtFrom.Text) Then
+    ElseIf cboTo.SelectedIndex = -1 AndAlso cboFrom.SelectedIndex <> -1 AndAlso Not String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please select temperature units to convert from and to.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       cboTo.Select()
-    ElseIf cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex = -1 And String.IsNullOrEmpty(txtFrom.Text) Then
+    ElseIf cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex = -1 AndAlso String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please select temperature units to convert from and to and input a temperature for conversion.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       txtFrom.Select()
-    ElseIf cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex <> -1 And String.IsNullOrEmpty(txtFrom.Text) Then
+    ElseIf cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex <> -1 AndAlso String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please select temperature units to convert from and to and input a temperature for conversion.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       cboFrom.Select()
-    ElseIf cboTo.SelectedIndex = -1 AndAlso cboFrom.SelectedIndex <> -1 And String.IsNullOrEmpty(txtFrom.Text) Then
+    ElseIf cboTo.SelectedIndex = -1 AndAlso cboFrom.SelectedIndex <> -1 AndAlso String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please select temperature units to convert from and to and input a temperature for conversion.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       cboTo.Select()
+    ElseIf String.IsNullOrEmpty(txtFrom.Text) Then
+      MessageBox.Show("Please input a temperature for conversion.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+      txtFrom.Select()
     End If
 
     'Main logic temperature conversion program. Selects which operation to perform depending on which sDrpDownSelect1 value (FAHRENHEIT, CELSIUS, KELVIN) is selected.
@@ -91,9 +89,7 @@ Public Class TemperatureConversion
     'If cboFrom.SelectedIndex <> -1 And cboTo.SelectedIndex <> -1 And cboFrom.SelectedIndex <> cboTo.SelectedIndex Then
     If cboFrom.SelectedIndex = cboTo.SelectedIndex AndAlso cboFrom.SelectedIndex <> -1 AndAlso cboTo.SelectedIndex <> -1 Then
       lblOutput.Text = txtFrom.Text
-
-      'ElseIf cboFrom.SelectedIndex = cboTo.SelectedIndex And cboFrom.SelectedIndex <> -1 And cboTo.SelectedIndex <> -1 Then
-    ElseIf cboFrom.SelectedIndex <> -1 AndAlso cboTo.SelectedIndex <> -1 AndAlso cboFrom.SelectedIndex <> cboTo.SelectedIndex Then
+    ElseIf cboFrom.SelectedIndex <> -1 AndAlso cboTo.SelectedIndex <> -1 AndAlso cboFrom.SelectedIndex <> cboTo.SelectedIndex AndAlso Not String.IsNullOrEmpty(txtFrom.Text) Then
       Select Case cboFrom.SelectedIndex
         Case Temp.F
           If cboTo.SelectedIndex = Temp.C Then
@@ -146,7 +142,6 @@ Public Class TemperatureConversion
       End Select
     End If
   End Sub
-
 
   ''' <summary>
   '''   Mathematical conversion formula to convert FAHRENHEIT to CELSIUS that is called within main logic above Select...Case statements.
