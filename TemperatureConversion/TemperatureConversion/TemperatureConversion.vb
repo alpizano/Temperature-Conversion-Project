@@ -57,7 +57,7 @@ Public Class TemperatureConversion
 
   Private Sub btnConvert_Click(sender As Object, e As EventArgs) Handles btnConvert.Click
     'Initializes temperature input to "From:" TextBox to Double variable type.
-    Dim dValueOfTxtBoxFrom As Double = 0
+    Dim dFromValue As Double = 0
 
     'Error Handling for Drop-down boxes.
     'Get values from both Drop-down boxes and store inside variables if not NULL. Else throws NULL object reference Error 10001.
@@ -67,7 +67,7 @@ Public Class TemperatureConversion
     ElseIf cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex <> -1 AndAlso Not String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please select temperature units to convert from and to.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       cboFrom.Select()
-    ElseIf cboTo.SelectedIndex = -1 AndAlso cboFrom.SelectedIndex <> -1 AndAlso Not String.IsNullOrEmpty(txtFrom.Text) Then
+    ElseIf cboFrom.SelectedIndex <> -1 AndAlso cboTo.SelectedIndex = -1 AndAlso Not String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please select temperature units to convert from and to.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       cboTo.Select()
     ElseIf cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex = -1 AndAlso String.IsNullOrEmpty(txtFrom.Text) Then
@@ -76,10 +76,10 @@ Public Class TemperatureConversion
     ElseIf cboFrom.SelectedIndex = -1 AndAlso cboTo.SelectedIndex <> -1 AndAlso String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please select temperature units to convert from and to and input a temperature for conversion.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       cboFrom.Select()
-    ElseIf cboTo.SelectedIndex = -1 AndAlso cboFrom.SelectedIndex <> -1 AndAlso String.IsNullOrEmpty(txtFrom.Text) Then
+    ElseIf cboFrom.SelectedIndex <> -1 AndAlso cboTo.SelectedIndex = -1 AndAlso String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please select temperature units to convert from and to and input a temperature for conversion.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       cboTo.Select()
-    ElseIf String.IsNullOrEmpty(txtFrom.Text) Then
+    ElseIf cboFrom.SelectedIndex <> -1 AndAlso cboTo.SelectedIndex <> -1 AndAlso String.IsNullOrEmpty(txtFrom.Text) Then
       MessageBox.Show("Please input a temperature for conversion.", "Error: 10001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
       txtFrom.Select()
     End If
@@ -87,60 +87,42 @@ Public Class TemperatureConversion
     'Main logic temperature conversion program. Selects which operation to perform depending on which sDrpDownSelect1 value (FAHRENHEIT, CELSIUS, KELVIN) is selected.
     'Performs appropriate mathematical conversion depending on which sDrpDownSelect2 value (FAHRENHEIT, CELSIUS, KELVIN) is selected.
     'If cboFrom.SelectedIndex <> -1 And cboTo.SelectedIndex <> -1 And cboFrom.SelectedIndex <> cboTo.SelectedIndex Then
-    If cboFrom.SelectedIndex = cboTo.SelectedIndex AndAlso cboFrom.SelectedIndex <> -1 AndAlso cboTo.SelectedIndex <> -1 Then
-      lblOutput.Text = txtFrom.Text
-    ElseIf cboFrom.SelectedIndex <> -1 AndAlso cboTo.SelectedIndex <> -1 AndAlso cboFrom.SelectedIndex <> cboTo.SelectedIndex AndAlso Not String.IsNullOrEmpty(txtFrom.Text) Then
-      Select Case cboFrom.SelectedIndex
-        Case Temp.F
-          If cboTo.SelectedIndex = Temp.C Then
-            dValueOfTxtBoxFrom = CType(txtFrom.Text, Double)
-            Try
-              lblOutput.Text = CType(FahrToCel(dValueOfTxtBoxFrom), String)
-            Catch ex1 As ArithmeticException
-              Console.WriteLine(ex1.Message)
-            End Try
-          Else
-            dValueOfTxtBoxFrom = CType(txtFrom.Text, Double)
-            Try
-              lblOutput.Text = CType(FahrToKelv(dValueOfTxtBoxFrom), String)
-            Catch ex2 As ArithmeticException
-              Console.WriteLine(ex2.Message)
-            End Try
-          End If
-        Case Temp.C
-          If cboTo.SelectedIndex = Temp.F Then
-            dValueOfTxtBoxFrom = CType(txtFrom.Text, Double)
-            Try
-              lblOutput.Text = CType(CelToFahr(dValueOfTxtBoxFrom), String)
-            Catch ex3 As ArithmeticException
-              Console.WriteLine(ex3.Message)
-            End Try
-          Else
-            dValueOfTxtBoxFrom = CType(txtFrom.Text, Double)
-            Try
-              lblOutput.Text = CType(CelToKelv(dValueOfTxtBoxFrom), String)
-            Catch ex4 As ArithmeticException
-              Console.WriteLine(ex4.Message)
-            End Try
-          End If
-        Case Temp.K
-          If cboTo.SelectedIndex = Temp.F Then
-            dValueOfTxtBoxFrom = CType(txtFrom.Text, Double)
-            Try
-              lblOutput.Text = CType(KelvToFahr(dValueOfTxtBoxFrom), String)
-            Catch ex5 As ArithmeticException
-              Console.WriteLine(ex5.Message)
-            End Try
-          Else
-            dValueOfTxtBoxFrom = CType(txtFrom.Text, Double)
-            Try
-              lblOutput.Text = CType(KelvToCel(dValueOfTxtBoxFrom), String)
-            Catch ex6 As ArithmeticException
-              Console.WriteLine(ex6.Message)
-            End Try
-          End If
-      End Select
-    End If
+    Try
+      If cboFrom.SelectedIndex = cboTo.SelectedIndex AndAlso cboFrom.SelectedIndex <> -1 AndAlso cboTo.SelectedIndex <> -1 Then
+        lblOutput.Text = txtFrom.Text
+      ElseIf cboFrom.SelectedIndex <> -1 AndAlso cboTo.SelectedIndex <> -1 AndAlso cboFrom.SelectedIndex <> cboTo.SelectedIndex AndAlso Not String.IsNullOrEmpty(txtFrom.Text) Then
+        Select Case cboFrom.SelectedIndex
+          Case Temp.F
+            If cboTo.SelectedIndex = Temp.C Then
+              dFromValue = CType(txtFrom.Text, Double)
+              lblOutput.Text = CType(FahrToCel(dFromValue), String)
+            Else
+              dFromValue = CType(txtFrom.Text, Double)
+              lblOutput.Text = CType(FahrToKelv(dFromValue), String)
+            End If
+          Case Temp.C
+            If cboTo.SelectedIndex = Temp.F Then
+              dFromValue = CType(txtFrom.Text, Double)
+              lblOutput.Text = CType(CelToFahr(dFromValue), String)
+            Else
+              dFromValue = CType(txtFrom.Text, Double)
+              lblOutput.Text = CType(CelToKelv(dFromValue), String)
+            End If
+          Case Temp.K
+            If cboTo.SelectedIndex = Temp.F Then
+              dFromValue = CType(txtFrom.Text, Double)
+              lblOutput.Text = CType(KelvToFahr(dFromValue), String)
+            Else
+              Console.WriteLine("I'm here dad")
+              dFromValue = CType(txtFrom.Text, Double)
+              lblOutput.Text = CType(KelvToCel(dFromValue), String)
+            End If
+        End Select
+      End If
+    Catch ex As Exception
+      Console.WriteLine(ex.Message)
+    End Try
+
   End Sub
 
   ''' <summary>
@@ -151,7 +133,11 @@ Public Class TemperatureConversion
   ''' </remarks>
   Dim dAns As Double = 0
   Function FahrToCel(dNum As Double) As Double
-    dAns = (dNum - 32) * 5 / 9
+    Try
+      dAns = (dNum - 32) * 5 / 9
+    Catch ex As Exception
+      Console.WriteLine(ex.Message)
+    End Try
     dAns = Math.Round(dAns, 2)
     Return dAns
   End Function
@@ -163,7 +149,11 @@ Public Class TemperatureConversion
   ''' <remarks>
   ''' </remarks>
   Function FahrToKelv(dNum As Double) As Double
-    dAns = (dNum - 32) * 5 / 9 + 273.15
+    Try
+      dAns = (dNum - 32) * 5 / 9 + 273.15
+    Catch ex As Exception
+      Console.WriteLine(ex.Message)
+    End Try
     dAns = Math.Round(dAns, 2)
     Return dAns
   End Function
@@ -175,7 +165,11 @@ Public Class TemperatureConversion
   ''' <remarks>
   ''' </remarks>
   Function CelToFahr(dNum As Double) As Double
-    dAns = (dNum * 9 / 5) + 32
+    Try
+      dAns = (dNum * 9 / 5) + 32
+    Catch ex As Exception
+      Console.WriteLine(ex.Message)
+    End Try
     dAns = Math.Round(dAns, 2)
     Return dAns
   End Function
@@ -187,7 +181,11 @@ Public Class TemperatureConversion
   ''' <remarks>
   ''' </remarks>
   Function CelToKelv(dNum As Double) As Double
-    dAns = dNum + 273.15
+    Try
+      dAns = dNum + 273.15
+    Catch ex As Exception
+      Console.WriteLine(ex.Message)
+    End Try
     dAns = Math.Round(dAns, 2)
     Return dAns
   End Function
@@ -199,7 +197,11 @@ Public Class TemperatureConversion
   ''' <remarks>
   ''' </remarks>
   Function KelvToFahr(dNum As Double) As Double
-    dAns = (dNum - 273.15) * 9 / 5 + 32
+    Try
+      dAns = (dNum - 273.15) * 9 / 5 + 32
+    Catch ex As Exception
+      Console.WriteLine(ex.Message)
+    End Try
     dAns = Math.Round(dAns, 2)
     Return dAns
   End Function
@@ -211,7 +213,11 @@ Public Class TemperatureConversion
   ''' <remarks>
   ''' </remarks>
   Function KelvToCel(dNum As Double) As Double
-    dAns = dNum - 273.15
+    Try
+      dAns = dNum - 273.15
+    Catch ex As Exception
+      Console.WriteLine(ex)
+    End Try
     dAns = Math.Round(dAns, 2)
     Return dAns
   End Function
